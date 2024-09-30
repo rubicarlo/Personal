@@ -22,11 +22,12 @@
                 <!-- Lista estilizada -->
                 <ul id="resultados" class="list-unstyled mt-3">
                     {% for persona in personas %}
-                        <li class="{% if forloop.counter0|divisibleby:2 %}bg-white{% else %}bg-light{% endif %} my-1 rounded">
-                            <a href="?dni={{ persona.dni }}" class="text-decoration-none text-dark p-2 d-block hover-bg-primary">
-                                {{ persona.apellidos }} {{ persona.nombre }}
-                            </a>
-                        </li>
+                    <li class="{% if forloop.counter0|divisibleby:2 %}bg-white{% else %}bg-light{% endif %} my-1 rounded">
+                        <a href="{% url 'editar_persona' persona.dni %}" class="text-decoration-none text-dark p-2 d-block hover-bg-primary">
+                            {{ persona.apellidos }}, {{ persona.nombre }}
+                        </a>
+                        
+                    </li>                    
                     {% empty %}
                         <li>No hay personas registradas.</li>
                     {% endfor %}
@@ -45,38 +46,38 @@
     <script>
         // Obtener el campo de búsqueda
         const inputBusqueda = document.getElementById('busqueda');
-        
-        // Evento que se activa cada vez que se escribe en el campo de búsqueda
-        inputBusqueda.addEventListener('input', () => {
-            const busqueda = inputBusqueda.value;
 
-            // Realizar la solicitud a la vista de filtrado
-            fetch(`/api/personas/filtrar/?search=${busqueda}`)
-                .then(response => response.json())
-                .then(personasFiltradas => {
-                    const resultados = document.getElementById('resultados');
-                    resultados.innerHTML = '';  // Limpiar resultados previos
+// Evento que se activa cada vez que se escribe en el campo de búsqueda
+inputBusqueda.addEventListener('input', () => {
+    const busqueda = inputBusqueda.value;
 
-                    // Verificar si hay resultados filtrados
-                    if (personasFiltradas.length === 0) {
-                        resultados.innerHTML = '<li>No se encontraron resultados.</li>';
-                    } else {
-                        // Agregar cada persona filtrada a la lista
-                        personasFiltradas.forEach(persona => {
-                            const li = document.createElement('li');
-                            li.className = 'my-1 rounded';
-                            li.innerHTML = `
-                                <a href="?dni=${persona.dni}" class="text-decoration-none text-dark p-2 d-block hover-bg-primary">
-                                    ${persona.apellidos}, ${persona.nombre}
-                                </a>`;
-                            resultados.appendChild(li);
-                        });
-                    }
-                })
-                .catch(error => {
-                    console.error('Error al filtrar:', error);
+    // Realizar la solicitud a la vista de filtrado
+    fetch(`/api/personas/filtrar/?search=${busqueda}`)
+        .then(response => response.json())
+        .then(personasFiltradas => {
+            const resultados = document.getElementById('resultados');
+            resultados.innerHTML = '';  // Limpiar resultados previos
+
+            // Verificar si hay resultados filtrados
+            if (personasFiltradas.length === 0) {
+                resultados.innerHTML = '<li>No se encontraron resultados.</li>';
+            } else {
+                // Agregar cada persona filtrada a la lista
+                personasFiltradas.forEach(persona => {
+                    const li = document.createElement('li');
+                    li.className = 'my-1 rounded';
+                    li.innerHTML = `
+                        <a href="/editar/${persona.dni}/" class="text-decoration-none text-dark p-2 d-block hover-bg-primary">
+                            ${persona.apellidos}, ${persona.nombre}
+                        </a>`;
+                    resultados.appendChild(li);
                 });
+            }
+        })
+        .catch(error => {
+            console.error('Error al filtrar:', error);
         });
+});
     </script>
 </body>
 </html>

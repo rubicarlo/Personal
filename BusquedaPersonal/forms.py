@@ -10,7 +10,7 @@ class EditarPersonaForm(forms.ModelForm):
             'nif', 'nie', 'nrp', 'nss', 'sexo', 'fecha_nacimiento', 'pais_nacimiento', 
             'mail_institucional', 'mail_alternativo', 'telefono_personal_fijo', 
             'telefono_personal_movil', 'codigo_postal', 'domicilio', 
-            'localidad_domicilio', 'provincia_domicilio', 'foto'
+            'localidad_domicilio', 'provincia_domicilio', #'foto'
         ]
         widgets = {
             'nif': forms.TextInput(attrs={'class': 'form-control'}),
@@ -34,7 +34,7 @@ class EditarPersonaForm(forms.ModelForm):
             'codigo_postal': forms.TextInput(attrs={'class': 'form-control'}),
             'localidad_domicilio': forms.TextInput(attrs={'class': 'form-control'}),
             'provincia_domicilio': forms.TextInput(attrs={'class': 'form-control'}),
-            'foto': forms.FileInput(attrs={'class': 'form-control'}),
+            #'foto': forms.FileInput(attrs={'class': 'form-control'}),
         }
 
 class BuscarPersonaForm(forms.Form):

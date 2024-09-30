@@ -1,18 +1,19 @@
 from django.db import models
+from django.urls import reverse
 
 # Create your models here.
 class PersonasModelo(models.Model):
     dni = models.CharField(primary_key=True, max_length=32, db_collation='utf8mb3_spanish_ci')
     apellidos = models.CharField(max_length=50, db_collation='utf8mb3_spanish_ci')
     nombre = models.CharField(max_length=50, db_collation='utf8mb3_spanish_ci')
-    externo = models.IntegerField()
+    externo = models.BooleanField()
     responsable = models.IntegerField()
     cientifico = models.IntegerField()
     superusuario = models.IntegerField(db_comment='superusuario de vehículos')
-    baja = models.IntegerField()
+    baja = models.BooleanField()
     carnet = models.IntegerField()
     superusuario_intranet = models.IntegerField()
-    directorio = models.IntegerField(db_comment='1 si aparece en el directorio web, 0 en caso contrario')
+    directorio = models.BooleanField(db_comment='1 si aparece en el directorio web, 0 en caso contrario')
     no_persona = models.IntegerField(blank=True, null=True)
     nif = models.CharField(unique=True, max_length=10, db_collation='utf8mb3_spanish_ci', blank=True, null=True)
     nie = models.CharField(unique=True, max_length=11, db_collation='utf8mb3_spanish_ci', blank=True, null=True)
@@ -30,8 +31,11 @@ class PersonasModelo(models.Model):
     localidad_domicilio = models.CharField(max_length=50, db_collation='utf8mb3_spanish_ci', blank=True, null=True)
     provincia_domicilio = models.CharField(max_length=50, db_collation='utf8mb3_spanish_ci', blank=True, null=True)
     id_ubicacion = models.IntegerField(blank=True, null=True)
-    foto = models.TextField(blank=True, null=True)
+    #foto = models.TextField(blank=True, null=True)
 
+    def get_absolute_url(self):
+        return reverse('editar_persona', args=[self.dni])     
+            
     class Meta:
-        managed = False
+        managed = True
         db_table = 'personas'

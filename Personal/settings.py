@@ -89,11 +89,11 @@ USE_TZ = True
 
 
 STATIC_URL = '/static/'
-
-STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, 'Personal/static'),  # Ajusta esta ruta según tu estructura de directorios
-]
 import os
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, '/'),  # Ajusta esta ruta según tu estructura de directorios
+]
+
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
