@@ -13,8 +13,8 @@
 <body>
     <div class="container-fluid">
         <div class="row">
-            <!-- Sidebar (20% de ancho) -->
-            <div class="col-md-3 col-lg-2 bg-light sidebar">
+            <!-- Sidebar (20% de ancho) con barra fija al hacer scroll -->
+            <div class="col-md-3 col-lg-2 bg-light sidebar" style="position: sticky; top: 0; height: 100vh; overflow-y: auto;">
                 <h3>Buscar Personas</h3>
                 <!-- Campo de búsqueda -->
                 <input type="text" id="busqueda" class="form-control" placeholder="Buscar..." />
@@ -26,7 +26,6 @@
                         <a href="{% url 'editar_persona' persona.dni %}" class="text-decoration-none text-dark p-2 d-block hover-bg-primary">
                             {{ persona.apellidos }}, {{ persona.nombre }}
                         </a>
-                        
                     </li>                    
                     {% empty %}
                         <li>No hay personas registradas.</li>
@@ -44,40 +43,77 @@
     </div>
 
     <script>
+        // Función para cargar las personas
+        function cargarPersonas() {
+            // Realizar la solicitud a la vista de filtrado sin término de búsqueda
+            fetch(`/api/personas/filtrar/`)
+                .then(response => response.json())
+                .then(personasFiltradas => {
+                    const resultados = document.getElementById('resultados');
+                    resultados.innerHTML = '';  // Limpiar resultados previos
+    
+                    // Verificar si hay resultados filtrados
+                    if (personasFiltradas.length === 0) {
+                        resultados.innerHTML = '<li>No se encontraron resultados.</li>';
+                    } else {
+                        // Agregar cada persona filtrada a la lista
+                        personasFiltradas.forEach(persona => {
+                            const li = document.createElement('li');
+                            li.className = 'my-1 rounded';
+                            li.innerHTML = `
+                                <a href="/editar/${persona.dni}/" class="text-decoration-none text-dark p-2 d-block hover-bg-primary">
+                                    ${persona.apellidos}, ${persona.nombre}
+                                </a>`;
+                            resultados.appendChild(li);
+                        });
+                    }
+                })
+                .catch(error => {
+                    console.error('Error al cargar las personas:', error);
+                });
+        }
+    
         // Obtener el campo de búsqueda
         const inputBusqueda = document.getElementById('busqueda');
-
-// Evento que se activa cada vez que se escribe en el campo de búsqueda
-inputBusqueda.addEventListener('input', () => {
-    const busqueda = inputBusqueda.value;
-
-    // Realizar la solicitud a la vista de filtrado
-    fetch(`/api/personas/filtrar/?search=${busqueda}`)
-        .then(response => response.json())
-        .then(personasFiltradas => {
-            const resultados = document.getElementById('resultados');
-            resultados.innerHTML = '';  // Limpiar resultados previos
-
-            // Verificar si hay resultados filtrados
-            if (personasFiltradas.length === 0) {
-                resultados.innerHTML = '<li>No se encontraron resultados.</li>';
-            } else {
-                // Agregar cada persona filtrada a la lista
-                personasFiltradas.forEach(persona => {
-                    const li = document.createElement('li');
-                    li.className = 'my-1 rounded';
-                    li.innerHTML = `
-                        <a href="/editar/${persona.dni}/" class="text-decoration-none text-dark p-2 d-block hover-bg-primary">
-                            ${persona.apellidos}, ${persona.nombre}
-                        </a>`;
-                    resultados.appendChild(li);
+    
+        // Evento que se activa cada vez que se escribe en el campo de búsqueda
+        inputBusqueda.addEventListener('input', () => {
+            const busqueda = inputBusqueda.value;
+    
+            // Realizar la solicitud a la vista de filtrado con el término de búsqueda
+            fetch(`/api/personas/filtrar/?search=${busqueda}`)
+                .then(response => response.json())
+                .then(personasFiltradas => {
+                    const resultados = document.getElementById('resultados');
+                    resultados.innerHTML = '';  // Limpiar resultados previos
+    
+                    // Verificar si hay resultados filtrados
+                    if (personasFiltradas.length === 0) {
+                        resultados.innerHTML = '<li>No se encontraron resultados.</li>';
+                    } else {
+                        // Agregar cada persona filtrada a la lista
+                        personasFiltradas.forEach(persona => {
+                            const li = document.createElement('li');
+                            li.className = 'my-1 rounded';
+                            li.innerHTML = `
+                                <a href="/editar/${persona.dni}/" class="text-decoration-none text-dark p-2 d-block hover-bg-primary">
+                                    ${persona.apellidos}, ${persona.nombre}
+                                </a>`;
+                            resultados.appendChild(li);
+                        });
+                    }
+                })
+                .catch(error => {
+                    console.error('Error al filtrar:', error);
                 });
-            }
-        })
-        .catch(error => {
-            console.error('Error al filtrar:', error);
         });
-});
+    
+        // Llamar a la función cargarPersonas cuando la página se carga
+        window.onload = function() {
+            cargarPersonas();
+        };
     </script>
+    
 </body>
+
 </html>

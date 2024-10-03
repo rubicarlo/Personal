@@ -5,8 +5,8 @@ class EditarPersonaForm(forms.ModelForm):
     class Meta:
         model = PersonasModelo
         fields = [
-            'dni', 'apellidos', 'nombre', 'externo', 'responsable', 'cientifico', 
-            'superusuario', 'baja', 'carnet', 'superusuario_intranet', 'directorio', 
+            'dni', 'apellidos', 'nombre', 'externo',# 'responsable', 'cientifico', 
+            'baja', 'directorio', 
             'nif', 'nie', 'nrp', 'nss', 'sexo', 'fecha_nacimiento', 'pais_nacimiento', 
             'mail_institucional', 'mail_alternativo', 'telefono_personal_fijo', 
             'telefono_personal_movil', 'codigo_postal', 'domicilio', 
@@ -18,7 +18,7 @@ class EditarPersonaForm(forms.ModelForm):
             'nie': forms.TextInput(attrs={'class': 'form-control'}),
             'nrp': forms.TextInput(attrs={'class': 'form-control'}),
             'nss': forms.TextInput(attrs={'class': 'form-control'}),
-            'fecha_nacimiento': forms.DateInput(attrs={'class': 'form-control', 'type': 'date'}),
+            'fecha_nacimiento': forms.DateInput(attrs={'class': 'form-control', 'type': 'date'},format='%Y-%m-%d'),
             'pais_nacimiento': forms.TextInput(attrs={'class': 'form-control'}),
             'directorio': forms.CheckboxInput(attrs={'class': 'form-check-input'}),  
             'baja': forms.CheckboxInput(attrs={'class': 'form-check-input'}), 
