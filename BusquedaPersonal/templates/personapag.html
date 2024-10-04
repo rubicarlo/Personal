@@ -1,13 +1,113 @@
 {% extends 'personas_list.html' %}
 {% load static %}
 {% block content %}
-<link rel="stylesheet" href="{% static 'css/styles.css' %}">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/5.3.0/css/bootstrap.min.css">
-  <h2>Editar Persona</h2>
-  <form method="post">
-    {% csrf_token %}
 
-    {{ form.as_p }}
-    <button type="submit">Guardar</button>
+<link rel="stylesheet" href="{% static 'css/styles.css' %}">
+<script src="{% static 'js/scripts.js' %}"></script>
+
+<div class="container-fluid my-4">
+  <form method="post">
+      {% csrf_token %}
+      <div class="row">
+          <!-- Columna Izquierda -->
+          <div class="col-lg-6 col-md-12">
+              <!-- Bloque Identificadores -->
+              <div class="card mb-3">
+                  <div class="card-body">
+                      <h5 class="card-title mb-4">Identificadores</h5>
+                      <div class="row">
+                          <div class="col-6 d-flex align-items-center mb-3"><strong>NIF:</strong> {{ form.nif }}</div>
+                          <div class="col-6 d-flex align-items-center mb-3"><strong>DNI:</strong> {{ form.dni }}</div>
+                          <div class="col-6 d-flex align-items-center mb-3"><strong>NIE:</strong> {{ form.nie }}</div>
+                          <div class="col-6 d-flex align-items-center mb-3"><strong>NRP:</strong> {{ form.nrp }}</div>
+                          <div class="col-6 d-flex align-items-center mb-3"><strong>NSS:</strong> {{ form.nss }}</div>
+                      </div>
+                  </div>
+              </div>
+
+              <!-- Fila para Bloques Nacimiento y Teléfonos -->
+              <div class="row">
+                  <!-- Bloque Nacimiento -->
+                  <div class="col-md-6">
+                      <div class="card mb-3">
+                          <div class="card-body">
+                              <h5 class="card-title mb-4">Nacimiento</h5>
+                              <div class="d-flex align-items-center mb-3"><strong>Fecha:</strong> {{ form.fecha_nacimiento }}</div>
+                              <div class="d-flex align-items-center mb-3"><strong>País:</strong> {{ form.pais_nacimiento }}</div>
+                          </div>
+                      </div>
+                  </div>
+
+                  <!-- Bloque Teléfonos -->
+                  <div class="col-md-6">
+                      <div class="card mb-3">
+                          <div class="card-body">
+                              <h5 class="card-title mb-4">Teléfonos</h5>
+                              <div class="d-flex align-items-center mb-3"><strong>Fijo:</strong> {{ form.telefono_personal_fijo }}</div>
+                              <div class="d-flex align-items-center mb-3"><strong>Móvil:</strong> {{ form.telefono_personal_movil }}</div>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+              <div class="card mb-3">
+                <div class="card-body">
+                    <h5 class="card-title mb-4">Domicilio</h5>
+                    <div class="d-flex align-items-center mb-3"><strong>Dirección:</strong> {{ form.domicilio }}</div>
+                    <div class="d-flex align-items-center mb-3"><strong>Código Postal:</strong> {{ form.codigo_postal }}</div>
+                    <div class="d-flex align-items-center mb-3"><strong>Localidad:</strong> {{ form.localidad_domicilio }}</div>
+                    <div class="d-flex align-items-center mb-3"><strong>Provincia:</strong> {{ form.provincia_domicilio }}</div>
+                </div>
+            </div>
+          </div>
+
+          <!-- Columna Derecha -->
+          <div class="col-lg-6 col-md-12">
+              <!-- Bloque Foto -->
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="card mb-3">
+                      <div class="card-body">
+                          <h5 class="card-title mb-4">Información Personal</h5>
+                          <div class="d-flex align-items-center mb-3"><strong>Nombre:</strong> {{ form.nombre }}</div> 
+                          <div class="d-flex align-items-center mb-3"><strong>Apellidos:</strong> {{ form.apellidos }}</div>
+                          <div class="d-flex align-items-center mb-3"><strong>Sexo:</strong> {{ form.sexo }}</div>
+                      </div>
+                  </div>
+              </div>
+                <!-- Bloque Foto -->
+                <div class="col-md-6">
+                    <div class="card mb-3 text-center">
+                        <div class="card-body">
+                              <img src="data:image/jpeg;base64,{{ persona.foto_base64 }}" class="img-fluid rounded-circle" style="max-width: 150px; max-height: 150px;">
+                        </div>
+                    </div>
+                </div>
+                
+            </div>
+
+              <!-- Bloque Correo Electrónico -->
+              <div class="card mb-3">
+                  <div class="card-body">
+                      <h5 class="card-title mb-4">Correo Electrónico</h5>
+                      <div class="d-flex align-items-center mb-3"><strong>Institucional:</strong> {{ form.mail_institucional }}</div>
+                      <div class="d-flex align-items-center mb-3"><strong>Alternativo:</strong> {{ form.mail_alternativo }}</div>
+                  </div>
+              </div>
+
+              <div class="card mb-3">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-4 d-flex align-items-center"><strong>Directorio:</strong> {{ form.directorio }}</div>
+                        <div class="col-4 d-flex align-items-center"><strong>Baja:</strong> {{ form.baja }}</div>
+                        <div class="col-4 d-flex align-items-center"><strong>Externo:</strong> {{ form.externo }}</div>
+                    </div>
+                </div>
+            </div> 
+            <button type="submit" class="btn btn-primary">Guardar</button>
+          </div>
+      </div>
   </form>
+</div>
+
 {% endblock %}
+

@@ -31,7 +31,7 @@ class PersonasModelo(models.Model):
     localidad_domicilio = models.CharField(max_length=50, db_collation='utf8mb3_spanish_ci', blank=True, null=True)
     provincia_domicilio = models.CharField(max_length=50, db_collation='utf8mb3_spanish_ci', blank=True, null=True)
     id_ubicacion = models.IntegerField(blank=True, null=True)
-    #foto = models.TextField(blank=True, null=True)
+    foto = models.TextField(blank=True, null=True)
 
     def get_absolute_url(self):
         return reverse('editar_persona', args=[self.dni])     
