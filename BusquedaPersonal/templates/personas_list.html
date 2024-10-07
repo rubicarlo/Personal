@@ -13,23 +13,27 @@
     <div class="container-fluid">
         <div class="row">
             <!-- Sidebar (20% de ancho) con barra fija al hacer scroll -->
-            <div class="col-md-3 col-lg-2 bg-light sidebar" style="position: sticky; top: 0; height: 100vh; overflow-y: auto;">
-                <h3>Buscar Personas</h3>
-                <!-- Campo de búsqueda -->
-                <input type="text" id="busqueda" class="form-control" placeholder="Buscar..." />
+            <div class="col-md-3 col-lg-2 bg-light sidebar vh-100 d-flex flex-column">
+                <!-- Contenedor que siempre permanece arriba -->
+                <div class="sticky-top bg-light pt-3">
+                    <h3>Buscar Personas</h3>
+                    <input type="text" id="busqueda" class="form-control" placeholder="Buscar..." />
+                </div>
 
-                <!-- Lista estilizada -->
-                <ul id="resultados" class="list-unstyled mt-3">
-                    {% for persona in personas %}
-                    <li class="{% if forloop.counter0|divisibleby:2 %}bg-white{% else %}bg-light{% endif %} my-1 rounded">
-                        <a href="{% url 'editar_persona' persona.dni %}" class="text-decoration-none text-dark p-2 d-block hover-bg-primary">
-                            {{ persona.apellidos }}, {{ persona.nombre }}
-                        </a>
-                    </li>                    
-                    {% empty %}
-                        <li>No hay personas registradas.</li>
-                    {% endfor %}
-                </ul>
+                <!-- Contenedor que se desplaza con la lista de resultados -->
+                <div class="flex-grow-1 overflow-auto mt-3">
+                    <ul id="resultados" class="list-group">
+                        {% for persona in personas %}
+                        <li class="list-group-item {% if forloop.counter0|divisibleby:2 %}list-group-item-light{% else %}bg-white{% endif %}">
+                            <a href="{% url 'editar_persona' persona.dni %}" class="text-decoration-none text-dark d-block">
+                                {{ persona.apellidos }}, {{ persona.nombre }}
+                            </a>
+                        </li>                    
+                        {% empty %}
+                            <li class="list-group-item">No hay personas registradas.</li>
+                        {% endfor %}
+                    </ul>
+                </div>
             </div>
 
             <!-- Contenido principal (80% de ancho) -->
@@ -53,14 +57,14 @@
     
                     // Verificar si hay resultados filtrados
                     if (personasFiltradas.length === 0) {
-                        resultados.innerHTML = '<li>No se encontraron resultados.</li>';
+                        resultados.innerHTML = '<li class="list-group-item">No se encontraron resultados.</li>';
                     } else {
                         // Agregar cada persona filtrada a la lista
                         personasFiltradas.forEach(persona => {
                             const li = document.createElement('li');
-                            li.className = 'my-1 rounded';
+                            li.className = 'list-group-item';
                             li.innerHTML = `
-                                <a href="/editar/${persona.dni}/" class="text-decoration-none text-dark p-2 d-block hover-bg-primary">
+                                <a href="/editar/${persona.dni}/" class="text-decoration-none text-dark d-block">
                                     ${persona.apellidos}, ${persona.nombre}
                                 </a>`;
                             resultados.appendChild(li);
@@ -88,14 +92,14 @@
     
                     // Verificar si hay resultados filtrados
                     if (personasFiltradas.length === 0) {
-                        resultados.innerHTML = '<li>No se encontraron resultados.</li>';
+                        resultados.innerHTML = '<li class="list-group-item">No se encontraron resultados.</li>';
                     } else {
                         // Agregar cada persona filtrada a la lista
                         personasFiltradas.forEach(persona => {
                             const li = document.createElement('li');
-                            li.className = 'my-1 rounded';
+                            li.className = 'list-group-item';
                             li.innerHTML = `
-                                <a href="/editar/${persona.dni}/" class="text-decoration-none text-dark p-2 d-block hover-bg-primary">
+                                <a href="/editar/${persona.dni}/" class="text-decoration-none text-dark d-block">
                                     ${persona.apellidos}, ${persona.nombre}
                                 </a>`;
                             resultados.appendChild(li);
