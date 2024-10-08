@@ -7,8 +7,9 @@ urlpatterns = [
     path("admin/", admin.site.urls),
     
     path('personas/', views.personas_list, name='personas_list'),
-    path('api/personas/filtrar/', views.personas_filtrar, name='personas_filtrar'),  # Nueva URL para el filtro
+    path('api/personas/filtrar/', views.personas_filtrar, name='personas_filtrar'),
     path('picha/', views.personas_list, name='picha'),
-    path('editar/<str:dni>/', views.EditarPersonaView.as_view(), name='editar_persona'),
+    path('personas/<str:dni>/', views.EditarPersonaView.as_view(), name='editar_persona'),
+    path('vidalaboral/<str:dni>/', views.VidaLaboralView.as_view(), name='vidalaboral'),
     path('__debug__/', include(debug_toolbar.urls)),
 ]

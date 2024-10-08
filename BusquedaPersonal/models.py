@@ -39,3 +39,30 @@ class PersonasModelo(models.Model):
     class Meta:
         managed = True
         db_table = 'personas'
+        
+class VidaLaboral(models.Model):
+    persona = models.ForeignKey(PersonasModelo, models.DO_NOTHING, db_column='persona')
+    responsable = models.ForeignKey(PersonasModelo, models.DO_NOTHING, db_column='responsable', related_name='vidalaboral_responsable_set')
+    fecha_inicio = models.DateField(blank=True, null=True)
+    fecha_fin = models.DateField(blank=True, null=True)
+    fecha_baja = models.DateField(blank=True, null=True)
+    motivo_baja = models.CharField(max_length=22, blank=True, null=True)
+   # salario = models.DecimalField(max_digits=10, decimal_places=2, blank=True, null=True)
+   # indemnizacion = models.DecimalField(max_digits=10, decimal_places=2, blank=True, null=True)
+   # trienios = models.DecimalField(max_digits=10, decimal_places=2, blank=True, null=True)
+   #referencia = models.CharField(max_length=64, blank=True, null=True, db_comment='Columna código -> proyectos')
+    dedicacion = models.CharField(max_length=8)
+ #   exclusiva = models.IntegerField()
+    
+    ''' id_departamento = models.ForeignKey(Departamentos, models.DO_NOTHING, db_column='id_departamento')
+    id_cuerpo_categoria = models.ForeignKey(CuerposCategorias, models.DO_NOTHING, db_column='id_cuerpo_categoria', blank=True, null=True)
+    nivel = models.CharField(max_length=2, blank=True, null=True)
+    id_tipo = models.ForeignKey(Tipos, models.DO_NOTHING, db_column='id_tipo')
+    id_subtipo = models.ForeignKey(Subtipos, models.DO_NOTHING, db_column='id_subtipo')
+    id_area_funcional = models.ForeignKey(AreasFuncionales, models.DO_NOTHING, db_column='id_area_funcional')
+    id_puesto = models.ForeignKey(Puestos, models.DO_NOTHING, db_column='id_puesto')
+    observaciones = models.CharField(max_length=128, blank=True, null=True)
+    '''
+    class Meta:
+        managed = True  
+        db_table = 'vida_laboral'
