@@ -14,7 +14,7 @@ class PersonasModelo(models.Model):
     carnet = models.IntegerField()
     superusuario_intranet = models.IntegerField()
     directorio = models.BooleanField(db_comment='1 si aparece en el directorio web, 0 en caso contrario')
-    no_persona = models.IntegerField(blank=True, null=True)
+    no_persona = models.BooleanField()
     nif = models.CharField(unique=True, max_length=10, db_collation='utf8mb3_spanish_ci', blank=True, null=True)
     nie = models.CharField(unique=True, max_length=11, db_collation='utf8mb3_spanish_ci', blank=True, null=True)
     nrp = models.CharField(max_length=20, db_collation='utf8mb3_spanish_ci', blank=True, null=True)

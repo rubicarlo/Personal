@@ -1,6 +1,6 @@
 import base64
 from django.http import JsonResponse
-from django.shortcuts import get_object_or_404, render
+from django.shortcuts import get_object_or_404
 from django.db.models import Q
 from django.urls import reverse_lazy
 from django.views.generic import UpdateView, ListView
@@ -8,14 +8,19 @@ from .models import PersonasModelo, VidaLaboral
 from .forms import EditarPersonaForm
 
 
-def personas_list(request):
-    personas = PersonasModelo.objects.values('dni', 'nombre', 'apellidos').order_by('apellidos')
-    return render(request, 'personas_list.html', {'personas': personas})
+class PersonasListView(ListView):
+    model = PersonasModelo
+    template_name = 'personas_list.html'
+    context_object_name = 'personas' 
+
+    def get_queryset(self):
+        return PersonasModelo.objects.filter(no_persona=False).values('dni', 'nombre', 'apellidos').order_by('apellidos')
 
 def personas_filtrar(request):
     search_term = request.GET.get('search', '')
     personas = PersonasModelo.objects.filter(
-        Q(apellidos__icontains=search_term) | Q(nombre__icontains=search_term)
+        Q(apellidos__icontains=search_term) | Q(nombre__icontains=search_term),
+        no_persona=False 
     ).values('dni', 'nombre', 'apellidos').order_by('apellidos')
     return JsonResponse(list(personas), safe=False)
 

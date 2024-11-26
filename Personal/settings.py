@@ -16,7 +16,8 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     'debug_toolbar',
-    'BusquedaPersonal'
+    'BusquedaPersonal',
+    'Portada'
 ]
 
 MIDDLEWARE = [
@@ -53,12 +54,20 @@ WSGI_APPLICATION = "Personal.wsgi.application"
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.mysql',  # Cambia 'sqlite3' por 'mysql'
-        'NAME': 'prueba',                   # Nombre de tu base de datos
-        'USER': 'root',                  # Tu usuario de MySQL/MariaDB
-        'PASSWORD': 'Zafiro2468.',           # Tu contraseña de MySQL/MariaDB
-        'HOST': 'localhost',                   # Host de la base de datos
-        'PORT': '3307',                        # Puerto (3306 es el puerto por defecto de MySQL/MariaDB)
+        'ENGINE': 'django.db.backends.mysql', 
+        'NAME': 'prueba',  
+        'USER': 'root',          
+        'PASSWORD': 'Zafiro2468.',     
+        'HOST': 'localhost',       
+        'PORT': '3307',    
+    },
+    'secundaria': {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'intranet',     
+        'USER': 'prueba',
+        'PASSWORD': 'Zafiro2468.',
+        'HOST': 'localhost',
+        'PORT': '3307',
     }
 }
 
